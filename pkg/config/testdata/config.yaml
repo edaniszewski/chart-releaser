@@ -1,0 +1,4 @@
+version: v1
+chart:
+  name: chart
+  repo: github.com/edaniszewski/charts-test
