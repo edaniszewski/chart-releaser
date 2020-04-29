@@ -13,3 +13,12 @@
 
 # Dependency directories (remove the comment below to include it)
 # vendor/
+
+# System files
+.DS_Store
+
+# IDE configuration
+.idea/
+
+# Build Binary
+chart-releaser
