@@ -65,6 +65,9 @@ func (Stage) Run(ctx *context.Context) error {
 	}
 
 	ctx.Chart.File.PreviousContents, err = marshalContents(chartMeta)
+	if err != nil {
+		return err
+	}
 
 	// Get the chart version and the app version defined in the Chart
 	if chartMeta.Version == "" {

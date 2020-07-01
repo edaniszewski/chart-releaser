@@ -71,6 +71,9 @@ func newInitCommand() *initCmd {
 				root.author,
 				root.email,
 			)
+			if err != nil {
+				return err
+			}
 
 			tmpl, err := template.New("init").Parse(templates.ConfigFileTemplate)
 			if err != nil {
