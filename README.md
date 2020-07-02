@@ -26,7 +26,7 @@ page. All tags generate a release with pre-compiled binaries attached as assets.
 A lightweight Docker image is also available:
 
 ```
-docker pull edaniszewski/chart-releaser
+docker pull chartreleaser/chart-releaser
 ``` 
 
 #### Homebrew

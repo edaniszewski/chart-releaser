@@ -4,7 +4,7 @@
 
 BIN_NAME    := chart-releaser
 BIN_VERSION := 0.1.0
-IMG_NAME    := edaniszewski/chart-releaser
+IMG_NAME    := chartreleaser/chart-releaser
 
 GIT_COMMIT  ?= $(shell git rev-parse --short HEAD 2> /dev/null || true)
 GIT_TAG     ?= $(shell git describe --tags 2> /dev/null || true)

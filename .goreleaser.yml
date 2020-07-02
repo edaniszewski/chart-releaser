@@ -46,10 +46,10 @@ dockers:
     binaries:
       - chart-releaser
     image_templates:
-      - 'edaniszewski/chart-releaser:{{ .Tag }}'
-      - 'edaniszewski/chart-releaser:{{ .Major }}'
-      - 'edaniszewski/chart-releaser:{{ .Major }}.{{ .Minor }}'
-      - 'edaniszewski/chart-releaser:latest'
+      - 'chartreleaser/chart-releaser:{{ .Tag }}'
+      - 'chartreleaser/chart-releaser:{{ .Major }}'
+      - 'chartreleaser/chart-releaser:{{ .Major }}.{{ .Minor }}'
+      - 'chartreleaser/chart-releaser:latest'
     build_flag_templates:
       - '--label=org.label-schema.version={{ .Version }}'
       - '--label=org.label-schema.build-date={{ .Date }}'
