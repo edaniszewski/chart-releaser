@@ -137,11 +137,11 @@ func TestStage_Run_StrategyPRDefaultTemplates(t *testing.T) {
 		Bumps the test-chart Helm Chart from 1.2.2 to 1.2.3.
 
 		The following files have also been updated:
-		- <pre>extra/file/1.txt</pre>
-		- <pre>extra/file/2.txt</pre>
+		- extra/file/1.txt
+		- extra/file/2.txt
 		
 		---
-		*This PR was opened using [chart-releaser](https://github.com/edaniszewski/chart-releaser)*
+		*This PR was generated with [chart-releaser](https://github.com/edaniszewski/chart-releaser)*
 `,
 	), context.Release.PRBody)
 }
