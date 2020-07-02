@@ -32,7 +32,7 @@ builds:
       - -X github.com/edaniszewski/chart-releaser/pkg.BuildDate={{ .Date }}
       - -X github.com/edaniszewski/chart-releaser/pkg.Commit={{ .ShortCommit }}
       - -X github.com/edaniszewski/chart-releaser/pkg.Tag={{ .Tag }}
-      - -X github.com/edaniszewski/chart-releaser/pkg.GoVersion={{ .Env.GIMME_GO_VERSION }}
+      - -X github.com/edaniszewski/chart-releaser/pkg.GoVersion={{ .Env.GO_VERSION }}
       - -X github.com/edaniszewski/chart-releaser/pkg.Version={{ .Version }}
     goos:
       - linux
