@@ -79,7 +79,7 @@ func TestStage_Run(t *testing.T) {
 
 	// Release
 	assert.Equal(t, "Bump {{ .Chart.Name }} Chart from {{ .Chart.PreviousVersion }} to {{ .Chart.NewVersion }}", context.Release.PRTitle)
-	assert.Equal(t, "Bumps the {{ .Chart.Name }} Helm Chart from {{ .Chart.PreviousVersion }} to {{ .Chart.NewVersion }}.\n\n{{ if .Files }}The following files have also been updated:\n{{ range .Files }}- <pre>{{ .Path }}</pre>\n{{ end }}{{ end }}\n---\n*This PR was opened using [chart-releaser](https://github.com/edaniszewski/chart-releaser)*\n", context.Release.PRBody)
+	assert.Equal(t, "Bumps the {{ .Chart.Name }} Helm Chart from {{ .Chart.PreviousVersion }} to {{ .Chart.NewVersion }}.\n\n{{ if .Files }}The following files have also been updated:\n{{ range .Files }}- {{ .Path }}\n{{ end }}{{ end }}\n---\n*This PR was generated with [chart-releaser](https://github.com/edaniszewski/chart-releaser)*\n", context.Release.PRBody)
 	assert.Equal(t, "[{{ .Chart.Name }}] bump chart to {{ .Chart.NewVersion }} for new application release ({{ .App.NewVersion }})", context.Release.UpdateCommitMsg)
 
 	// Other

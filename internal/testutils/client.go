@@ -30,7 +30,7 @@ func (c *FakeClient) GetFile(ctx context.Context, opts *client.Options, path str
 	return c.FileData, data
 }
 
-func (c *FakeClient) UpdateFile(ctx context.Context, opts *client.Options, path string,  msg string, contents []byte) error {
+func (c *FakeClient) UpdateFile(ctx context.Context, opts *client.Options, path string, msg string, contents []byte) error {
 	if len(c.UpdateFileError) == 0 {
 		return nil
 	}
