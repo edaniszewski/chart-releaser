@@ -114,6 +114,7 @@ func (f *Formatter) Run(opts FormatterOptions) error {
 		data = append(data, yml...)
 	} else {
 		data = []byte(templates.ConfigHeaderComment)
+		data = append(data, []byte("\n")...)
 		data = append(data, yml...)
 	}
 	return ioutil.WriteFile(opts.Path, data, 0644)

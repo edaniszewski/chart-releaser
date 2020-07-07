@@ -29,13 +29,13 @@ var ConfigFileTemplate = heredoc.Doc(`
 	{{ .Header }}
 	version: v1
 	chart:
-	  name: {{ .Chart }}
-      {{- if .Path }}path: {{ .Path }}{{ end }}
-      repo: github.com/{{ .GithubOwner }}/{{ .GithubName }}
+	  name: {{ .Chart }}{{ if .Path }}
+	  path: {{ .Path }}{{ end }}
+	  repo: github.com/{{ .GithubOwner }}/{{ .GithubName }}
 	commit:
 	  author:
 	    name: {{ .AuthorName }}
-	    email: {{ .Author.Email }}
+	    email: {{ .AuthorEmail }}
 `)
 
 // ConfigHeaderComment is the header comment which is applied to the generated config file.
@@ -43,7 +43,6 @@ var ConfigHeaderComment = heredoc.Doc(`
 	# .chartreleaser.yaml is the configuration file for chart-releaser, a CI tool
 	# to update Helm Charts on application release. See the documentation at
 	# https://github.com/edaniszewski/chart-releaser
-	
 `)
 
 // DefaultUpdateCommitMessage is the default template for a commit message used when

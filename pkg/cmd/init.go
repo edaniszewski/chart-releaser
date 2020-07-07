@@ -133,6 +133,7 @@ func NewInitOptions(chart, path, ghOwner, ghName, author, email string) (*InitOp
 			return nil, err
 		}
 		author = s
+		log.WithField("author", author).Debug("got author from git config")
 	}
 
 	if email == "" {
@@ -142,6 +143,7 @@ func NewInitOptions(chart, path, ghOwner, ghName, author, email string) (*InitOp
 			return nil, err
 		}
 		email = s
+		log.WithField("email", email).Debug("got email from git config")
 	}
 
 	return &InitOptions{
