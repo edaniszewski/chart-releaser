@@ -224,10 +224,12 @@ type ReleaseConfig struct {
 func (c *ReleaseConfig) validate() error {
 	collector := errs.NewCollector()
 
-	// FIXME (etd): Should this check only be run if there is a strategy specified?
-	//   otherwise, it feels like this should default to "default".
-	if _, err := strategies.UpdateStrategyFromString(c.Strategy); err != nil {
-		collector.Add(fmt.Errorf("invalid release strategy '%v', should be one of: %v", c.Strategy, strategies.ListUpdateStrategies()))
+	// Only validate the strategy if one is set. If not set, this will use
+	// the "default" strategy once the update pipeline is run.
+	if c.Strategy != "" {
+		if _, err := strategies.UpdateStrategyFromString(c.Strategy); err != nil {
+			collector.Add(fmt.Errorf("invalid release strategy '%v', should be one of: %v", c.Strategy, strategies.ListUpdateStrategies()))
+		}
 	}
 
 	if collector.HasErrors() {
@@ -301,6 +303,8 @@ func (c *ExtrasConfig) validate() error {
 
 	if c.Path != "" && len(c.Updates) == 0 {
 		collector.Add(fmt.Errorf("extras config specifies path but no options for search/replace updates"))
+	} else if c.Path == "" && len(c.Updates) != 0 {
+		collector.Add(fmt.Errorf("extras config specifies search/replace options, but no file path"))
 	}
 
 	for _, u := range c.Updates {

@@ -38,6 +38,11 @@ func (Stage) Run(ctx *context.Context) error {
 			RepoName:  ctx.Repository.Name,
 			RepoOwner: ctx.Repository.Owner,
 		}
+		log.WithFields(log.Fields{
+			"path":      extra.Path,
+			"repoName":  ctx.Repository.Name,
+			"repoOwner": ctx.Repository.Owner,
+		}).Debug("getting file contents")
 
 		contents, err := ctx.Client.GetFile(ctx.Context, opts, extra.Path)
 		if err != nil {
