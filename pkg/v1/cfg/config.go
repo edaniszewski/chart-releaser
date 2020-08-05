@@ -203,6 +203,7 @@ func (c *CommitConfig) validate() error {
 // operations.
 type CommitTemplateConfig struct {
 	Update string `yaml:"update,omitempty"`
+	Extras string `yaml:"extras,omitempty"`
 }
 
 // validate the CommitTemplateConfig is correct.

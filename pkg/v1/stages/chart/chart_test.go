@@ -60,7 +60,7 @@ appVersion: 0.2.3
 	assert.Equal(t, "", context.Git.Base)
 	assert.Equal(t, "", context.Git.Ref)
 	assert.Equal(t, "", context.Git.Tag)
-	assert.Equal(t, "", context.Release.UpdateCommitMsg)
+	assert.Equal(t, "", context.Release.ChartCommitMsg)
 	assert.Equal(t, "", context.Release.PRBody)
 	assert.Equal(t, "", context.Release.PRTitle)
 	assert.Equal(t, "", context.Repository.Name)

@@ -5,10 +5,9 @@ import (
 	"errors"
 	"text/template"
 
-	"github.com/edaniszewski/chart-releaser/pkg/client"
-
 	"github.com/apex/log"
 	"github.com/davecgh/go-spew/spew"
+	"github.com/edaniszewski/chart-releaser/pkg/client"
 	"github.com/edaniszewski/chart-releaser/pkg/strategies"
 	"github.com/edaniszewski/chart-releaser/pkg/templates"
 	context "github.com/edaniszewski/chart-releaser/pkg/v1/ctx"
@@ -48,7 +47,7 @@ func (Stage) Run(ctx *context.Context) error {
 		return err
 	}
 
-	ctx.Release.UpdateCommitMsg, err = utils.RenderTemplate(ctx, "update-commit", ctx.Release.UpdateCommitMsg)
+	ctx.Release.ChartCommitMsg, err = utils.RenderTemplate(ctx, "update-commit", ctx.Release.ChartCommitMsg)
 	if err != nil {
 		return err
 	}
@@ -129,7 +128,7 @@ func publishCommit(ctx *context.Context) error {
 
 	// Update the Chart
 	if ctx.Chart.File.HasChanges() {
-		if err := ctx.Client.UpdateFile(ctx.Context, opts, ctx.Chart.File.Path, ctx.Release.UpdateCommitMsg, ctx.Chart.File.NewContents); err != nil {
+		if err := ctx.Client.UpdateFile(ctx.Context, opts, ctx.Chart.File.Path, ctx.Release.ChartCommitMsg, ctx.Chart.File.NewContents); err != nil {
 			return err
 		}
 	} else {
@@ -137,9 +136,16 @@ func publishCommit(ctx *context.Context) error {
 		return ErrNoChartChanges
 	}
 
+	// Update each of the extra files which have changes.
 	for _, f := range ctx.Files {
 		if f.HasChanges() {
-			if err := ctx.Client.UpdateFile(ctx.Context, opts, f.Path, ctx.Release.UpdateCommitMsg, f.NewContents); err != nil {
+			ctx.CurrentFile = f
+
+			extrasCommitMsg, err := utils.RenderTemplate(ctx, f.Path, ctx.Release.ExtrasCommitMsg)
+			if err != nil {
+				return err
+			}
+			if err := ctx.Client.UpdateFile(ctx.Context, opts, f.Path, extrasCommitMsg, f.NewContents); err != nil {
 				return err
 			}
 		} else {

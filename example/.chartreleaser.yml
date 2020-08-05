@@ -14,5 +14,5 @@ release:
 extras:
 - path: something.txt
   updates:
-  - search: foo
-    replace: bar
+  - search: bar
+    replace: foo

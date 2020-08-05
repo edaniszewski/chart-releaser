@@ -27,7 +27,7 @@ func TestStage_RunGitRefError(t *testing.T) {
 
 	assert.Equal(t, "", context.Git.Ref)
 	assert.Equal(t, "", context.Git.Base)
-	assert.Equal(t, "", context.Release.UpdateCommitMsg)
+	assert.Equal(t, "", context.Release.ChartCommitMsg)
 	assert.Equal(t, "", context.Release.PRTitle)
 	assert.Equal(t, "", context.Release.PRBody)
 }
@@ -45,7 +45,7 @@ func TestStage_RunGitBaseError(t *testing.T) {
 
 	assert.Equal(t, "ref-branch", context.Git.Ref)
 	assert.Equal(t, "", context.Git.Base)
-	assert.Equal(t, "", context.Release.UpdateCommitMsg)
+	assert.Equal(t, "", context.Release.ChartCommitMsg)
 	assert.Equal(t, "", context.Release.PRTitle)
 	assert.Equal(t, "", context.Release.PRBody)
 }
@@ -57,7 +57,7 @@ func TestStage_RunReleaseUpdateMsgError(t *testing.T) {
 			Base: "base-branch",
 		},
 		Release: ctx.Release{
-			UpdateCommitMsg: "{{end}}",
+			ChartCommitMsg: "{{end}}",
 		},
 	}
 
@@ -66,7 +66,7 @@ func TestStage_RunReleaseUpdateMsgError(t *testing.T) {
 
 	assert.Equal(t, "ref-branch", context.Git.Ref)
 	assert.Equal(t, "base-branch", context.Git.Base)
-	assert.Equal(t, "", context.Release.UpdateCommitMsg)
+	assert.Equal(t, "", context.Release.ChartCommitMsg)
 	assert.Equal(t, "", context.Release.PRTitle)
 	assert.Equal(t, "", context.Release.PRBody)
 }
@@ -78,8 +78,8 @@ func TestStage_RunReleasePRTitleError(t *testing.T) {
 			Base: "base-branch",
 		},
 		Release: ctx.Release{
-			UpdateCommitMsg: "update-msg",
-			PRTitle:         "{{end}}",
+			ChartCommitMsg: "update-msg",
+			PRTitle:        "{{end}}",
 		},
 	}
 
@@ -88,7 +88,7 @@ func TestStage_RunReleasePRTitleError(t *testing.T) {
 
 	assert.Equal(t, "ref-branch", context.Git.Ref)
 	assert.Equal(t, "base-branch", context.Git.Base)
-	assert.Equal(t, "update-msg", context.Release.UpdateCommitMsg)
+	assert.Equal(t, "update-msg", context.Release.ChartCommitMsg)
 	assert.Equal(t, "", context.Release.PRTitle)
 	assert.Equal(t, "", context.Release.PRBody)
 }
@@ -100,9 +100,9 @@ func TestStage_RunReleasePRBodyError(t *testing.T) {
 			Base: "base-branch",
 		},
 		Release: ctx.Release{
-			UpdateCommitMsg: "update-msg",
-			PRTitle:         "pr-title",
-			PRBody:          "{{end}}",
+			ChartCommitMsg: "update-msg",
+			PRTitle:        "pr-title",
+			PRBody:         "{{end}}",
 		},
 	}
 
@@ -111,7 +111,7 @@ func TestStage_RunReleasePRBodyError(t *testing.T) {
 
 	assert.Equal(t, "ref-branch", context.Git.Ref)
 	assert.Equal(t, "base-branch", context.Git.Base)
-	assert.Equal(t, "update-msg", context.Release.UpdateCommitMsg)
+	assert.Equal(t, "update-msg", context.Release.ChartCommitMsg)
 	assert.Equal(t, "pr-title", context.Release.PRTitle)
 	assert.Equal(t, "", context.Release.PRBody)
 }

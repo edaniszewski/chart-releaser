@@ -124,13 +124,22 @@ func loadPublishStrategy(ctx *context.Context) error {
 
 func loadTemplateStrings(ctx *context.Context) error {
 	if ctx.Config.Commit.Templates == nil {
-		ctx.Release.UpdateCommitMsg = templates.DefaultUpdateCommitMessage
-		log.WithField("default", ctx.Release.UpdateCommitMsg).Debug("using default commit message for updating files")
+		ctx.Release.ChartCommitMsg = templates.DefaultUpdateCommitMessage
+		log.WithField("default", ctx.Release.ChartCommitMsg).Debug("using default commit message for updating Chart")
+
+		ctx.Release.ExtrasCommitMsg = templates.DefaultExtrasCommitMessage
+		log.WithField("default", ctx.Release.ExtrasCommitMsg).Debug("using default commit message for updating extra files")
 	} else {
-		ctx.Release.UpdateCommitMsg = ctx.Config.Commit.Templates.Update
-		if ctx.Release.UpdateCommitMsg == "" {
-			ctx.Release.UpdateCommitMsg = templates.DefaultUpdateCommitMessage
-			log.WithField("default", ctx.Release.UpdateCommitMsg).Debug("using default commit message for updating files")
+		ctx.Release.ChartCommitMsg = ctx.Config.Commit.Templates.Update
+		if ctx.Release.ChartCommitMsg == "" {
+			ctx.Release.ChartCommitMsg = templates.DefaultUpdateCommitMessage
+			log.WithField("default", ctx.Release.ChartCommitMsg).Debug("using default commit message for updating Chart")
+		}
+
+		ctx.Release.ExtrasCommitMsg = ctx.Config.Commit.Templates.Extras
+		if ctx.Release.ExtrasCommitMsg == "" {
+			ctx.Release.ExtrasCommitMsg = templates.DefaultExtrasCommitMessage
+			log.WithField("default", ctx.Release.ExtrasCommitMsg).Debug("using default commit message for updating extra files")
 		}
 	}
 

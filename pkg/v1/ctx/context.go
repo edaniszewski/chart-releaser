@@ -99,7 +99,8 @@ type Repository struct {
 type Release struct {
 	PRTitle         string
 	PRBody          string
-	UpdateCommitMsg string
+	ChartCommitMsg  string
+	ExtrasCommitMsg string
 	Matches         []*regexp.Regexp
 	Ignores         []*regexp.Regexp
 }
@@ -124,6 +125,11 @@ type Context struct {
 	Git        Git
 	Repository Repository
 	Release    Release
+
+	// CurrentFile holds a reference to a extras file that is currently being
+	// worked on when publishing changes. This allows template rendering to
+	// access information about the file, e.g. .CurrentFile.Path
+	CurrentFile File
 
 	AllowDirty bool
 	DryRun     bool

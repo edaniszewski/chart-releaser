@@ -80,7 +80,7 @@ func TestStage_Run(t *testing.T) {
 	// Release
 	assert.Equal(t, "Bump {{ .Chart.Name }} Chart from {{ .Chart.PreviousVersion }} to {{ .Chart.NewVersion }}", context.Release.PRTitle)
 	assert.Equal(t, "Bumps the {{ .Chart.Name }} Helm Chart from {{ .Chart.PreviousVersion }} to {{ .Chart.NewVersion }}.\n\n{{ if .Files }}The following files have also been updated:\n{{ range .Files }}- {{ .Path }}\n{{ end }}{{ end }}\n---\n*This PR was generated with [chart-releaser](https://github.com/edaniszewski/chart-releaser)*\n", context.Release.PRBody)
-	assert.Equal(t, "[{{ .Chart.Name }}] bump chart to {{ .Chart.NewVersion }} for new application release ({{ .App.NewVersion }})", context.Release.UpdateCommitMsg)
+	assert.Equal(t, "[{{ .Chart.Name }}] bump chart to {{ .Chart.NewVersion }} for new application release ({{ .App.NewVersion }})", context.Release.ChartCommitMsg)
 
 	// Other
 	assert.Equal(t, "", context.Token)
@@ -250,7 +250,7 @@ func TestLoadTemplateStringsDefaultsForCommit(t *testing.T) {
 	err := loadTemplateStrings(context)
 	assert.NoError(t, err)
 
-	assert.Equal(t, templates.DefaultUpdateCommitMessage, context.Release.UpdateCommitMsg)
+	assert.Equal(t, templates.DefaultUpdateCommitMessage, context.Release.ChartCommitMsg)
 	assert.Equal(t, "", context.Release.PRTitle)
 	assert.Equal(t, "", context.Release.PRBody)
 	assert.Equal(t, "master", context.Git.Ref)
@@ -279,7 +279,7 @@ func TestLoadTemplateStringsCustomForCommit(t *testing.T) {
 	err := loadTemplateStrings(context)
 	assert.NoError(t, err)
 
-	assert.Equal(t, "test update", context.Release.UpdateCommitMsg)
+	assert.Equal(t, "test update", context.Release.ChartCommitMsg)
 	assert.Equal(t, "", context.Release.PRTitle)
 	assert.Equal(t, "", context.Release.PRBody)
 	assert.Equal(t, "test-branch", context.Git.Ref)
@@ -301,7 +301,7 @@ func TestLoadTemplateStringsDefaultsForPR(t *testing.T) {
 	err := loadTemplateStrings(context)
 	assert.NoError(t, err)
 
-	assert.Equal(t, templates.DefaultUpdateCommitMessage, context.Release.UpdateCommitMsg)
+	assert.Equal(t, templates.DefaultUpdateCommitMessage, context.Release.ChartCommitMsg)
 	assert.Equal(t, templates.DefaultPullRequestTitle, context.Release.PRTitle)
 	assert.Equal(t, templates.DefaultPullRequestBody, context.Release.PRBody)
 	assert.Equal(t, templates.DefaultBranchName, context.Git.Ref)
@@ -332,7 +332,7 @@ func TestLoadTemplateStringsCustomForPR(t *testing.T) {
 	err := loadTemplateStrings(context)
 	assert.NoError(t, err)
 
-	assert.Equal(t, "test update", context.Release.UpdateCommitMsg)
+	assert.Equal(t, "test update", context.Release.ChartCommitMsg)
 	assert.Equal(t, "title-template", context.Release.PRTitle)
 	assert.Equal(t, "body-template", context.Release.PRBody)
 	assert.Equal(t, "branch-template", context.Git.Ref)
