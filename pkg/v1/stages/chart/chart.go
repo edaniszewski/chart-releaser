@@ -5,9 +5,8 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/edaniszewski/chart-releaser/pkg/client"
-
 	"github.com/apex/log"
+	"github.com/edaniszewski/chart-releaser/pkg/client"
 	version "github.com/edaniszewski/chart-releaser/pkg/semver"
 	"github.com/edaniszewski/chart-releaser/pkg/strategies"
 	context "github.com/edaniszewski/chart-releaser/pkg/v1/ctx"

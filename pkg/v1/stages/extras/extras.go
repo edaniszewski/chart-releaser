@@ -6,9 +6,8 @@ import (
 	"strings"
 	"text/template"
 
-	"github.com/edaniszewski/chart-releaser/pkg/client"
-
 	"github.com/apex/log"
+	"github.com/edaniszewski/chart-releaser/pkg/client"
 	context "github.com/edaniszewski/chart-releaser/pkg/v1/ctx"
 )
 

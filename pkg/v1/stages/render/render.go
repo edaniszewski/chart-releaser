@@ -32,7 +32,7 @@ func (Stage) Run(ctx *context.Context) error {
 		return err
 	}
 
-	ctx.Release.UpdateCommitMsg, err = utils.RenderTemplate(ctx, "update-commit", ctx.Release.UpdateCommitMsg)
+	ctx.Release.ChartCommitMsg, err = utils.RenderTemplate(ctx, "update-commit", ctx.Release.ChartCommitMsg)
 	if err != nil {
 		return err
 	}

@@ -29,9 +29,9 @@ func TestStage_Run_StrategyCommit(t *testing.T) {
 			Base: "base-branch",
 		},
 		Release: ctx.Release{
-			UpdateCommitMsg: "update-msg",
-			PRTitle:         "pr-title",
-			PRBody:          "pr-body",
+			ChartCommitMsg: "update-msg",
+			PRTitle:        "pr-title",
+			PRBody:         "pr-body",
 		},
 		Chart: ctx.Chart{
 			File: ctx.File{
@@ -48,7 +48,7 @@ func TestStage_Run_StrategyCommit(t *testing.T) {
 
 	assert.Equal(t, "ref-branch", context.Git.Ref)
 	assert.Equal(t, "base-branch", context.Git.Base)
-	assert.Equal(t, "update-msg", context.Release.UpdateCommitMsg)
+	assert.Equal(t, "update-msg", context.Release.ChartCommitMsg)
 	assert.Equal(t, "pr-title", context.Release.PRTitle)
 	assert.Equal(t, "pr-body", context.Release.PRBody)
 }
@@ -61,9 +61,9 @@ func TestStage_Run_StrategyPR(t *testing.T) {
 			Base: "base-branch",
 		},
 		Release: ctx.Release{
-			UpdateCommitMsg: "update-msg",
-			PRTitle:         "pr-title",
-			PRBody:          "pr-body",
+			ChartCommitMsg: "update-msg",
+			PRTitle:        "pr-title",
+			PRBody:         "pr-body",
 		},
 		Chart: ctx.Chart{
 			File: ctx.File{
@@ -80,7 +80,7 @@ func TestStage_Run_StrategyPR(t *testing.T) {
 
 	assert.Equal(t, "ref-branch", context.Git.Ref)
 	assert.Equal(t, "base-branch", context.Git.Base)
-	assert.Equal(t, "update-msg", context.Release.UpdateCommitMsg)
+	assert.Equal(t, "update-msg", context.Release.ChartCommitMsg)
 	assert.Equal(t, "pr-title", context.Release.PRTitle)
 	assert.Equal(t, "pr-body", context.Release.PRBody)
 }
@@ -93,9 +93,9 @@ func TestStage_Run_StrategyPRDefaultTemplates(t *testing.T) {
 			Base: "master",
 		},
 		Release: ctx.Release{
-			UpdateCommitMsg: templates.DefaultUpdateCommitMessage,
-			PRTitle:         templates.DefaultPullRequestTitle,
-			PRBody:          templates.DefaultPullRequestBody,
+			ChartCommitMsg: templates.DefaultUpdateCommitMessage,
+			PRTitle:        templates.DefaultPullRequestTitle,
+			PRBody:         templates.DefaultPullRequestBody,
 		},
 		Chart: ctx.Chart{
 			Name:            "test-chart",
@@ -131,7 +131,7 @@ func TestStage_Run_StrategyPRDefaultTemplates(t *testing.T) {
 
 	assert.Equal(t, "chartreleaser/test-chart/1.2.3", context.Git.Ref)
 	assert.Equal(t, "master", context.Git.Base)
-	assert.Equal(t, "[test-chart] bump chart to 1.2.3 for new application release (1.0.0)", context.Release.UpdateCommitMsg)
+	assert.Equal(t, "[test-chart] bump chart to 1.2.3 for new application release (1.0.0)", context.Release.ChartCommitMsg)
 	assert.Equal(t, "Bump test-chart Chart from 1.2.2 to 1.2.3", context.Release.PRTitle)
 	assert.Equal(t, heredoc.Doc(`
 		Bumps the test-chart Helm Chart from 1.2.2 to 1.2.3.
@@ -154,9 +154,9 @@ func TestStage_Run_DryRun(t *testing.T) {
 			Base: "base-branch",
 		},
 		Release: ctx.Release{
-			UpdateCommitMsg: "update-msg",
-			PRTitle:         "pr-title",
-			PRBody:          "pr-body",
+			ChartCommitMsg: "update-msg",
+			PRTitle:        "pr-title",
+			PRBody:         "pr-body",
 		},
 		PublishStrategy: strategies.PublishCommit,
 	}
@@ -166,7 +166,7 @@ func TestStage_Run_DryRun(t *testing.T) {
 
 	assert.Equal(t, "ref-branch", context.Git.Ref)
 	assert.Equal(t, "base-branch", context.Git.Base)
-	assert.Equal(t, "update-msg", context.Release.UpdateCommitMsg)
+	assert.Equal(t, "update-msg", context.Release.ChartCommitMsg)
 	assert.Equal(t, "pr-title", context.Release.PRTitle)
 	assert.Equal(t, "pr-body", context.Release.PRBody)
 }
@@ -178,9 +178,9 @@ func TestStage_RunPublishStrategyError(t *testing.T) {
 			Base: "base-branch",
 		},
 		Release: ctx.Release{
-			UpdateCommitMsg: "update-msg",
-			PRTitle:         "pr-title",
-			PRBody:          "pr-body",
+			ChartCommitMsg: "update-msg",
+			PRTitle:        "pr-title",
+			PRBody:         "pr-body",
 		},
 		PublishStrategy: strategies.PublishStrategy("invalid"),
 	}
@@ -190,7 +190,7 @@ func TestStage_RunPublishStrategyError(t *testing.T) {
 
 	assert.Equal(t, "ref-branch", context.Git.Ref)
 	assert.Equal(t, "base-branch", context.Git.Base)
-	assert.Equal(t, "update-msg", context.Release.UpdateCommitMsg)
+	assert.Equal(t, "update-msg", context.Release.ChartCommitMsg)
 	assert.Equal(t, "pr-title", context.Release.PRTitle)
 	assert.Equal(t, "pr-body", context.Release.PRBody)
 }
@@ -203,9 +203,9 @@ func TestStage_RunNoTagMatch(t *testing.T) {
 			Base: "base-branch",
 		},
 		Release: ctx.Release{
-			UpdateCommitMsg: "update-msg",
-			PRTitle:         "pr-title",
-			PRBody:          "pr-body",
+			ChartCommitMsg: "update-msg",
+			PRTitle:        "pr-title",
+			PRBody:         "pr-body",
 			Matches: []*regexp.Regexp{
 				regexp.MustCompile(`(\.[0-9])+`),
 			},
@@ -217,7 +217,7 @@ func TestStage_RunNoTagMatch(t *testing.T) {
 
 	assert.Equal(t, "ref-branch", context.Git.Ref)
 	assert.Equal(t, "base-branch", context.Git.Base)
-	assert.Equal(t, "update-msg", context.Release.UpdateCommitMsg)
+	assert.Equal(t, "update-msg", context.Release.ChartCommitMsg)
 	assert.Equal(t, "pr-title", context.Release.PRTitle)
 	assert.Equal(t, "pr-body", context.Release.PRBody)
 }
@@ -232,9 +232,9 @@ func TestStage_RunNoTagMatchDryRun(t *testing.T) {
 			Base: "base-branch",
 		},
 		Release: ctx.Release{
-			UpdateCommitMsg: "update-msg",
-			PRTitle:         "pr-title",
-			PRBody:          "pr-body",
+			ChartCommitMsg: "update-msg",
+			PRTitle:        "pr-title",
+			PRBody:         "pr-body",
 			Matches: []*regexp.Regexp{
 				regexp.MustCompile(`(\.[0-9])+`),
 			},
@@ -253,7 +253,7 @@ func TestStage_RunNoTagMatchDryRun(t *testing.T) {
 
 	assert.Equal(t, "ref-branch", context.Git.Ref)
 	assert.Equal(t, "base-branch", context.Git.Base)
-	assert.Equal(t, "update-msg", context.Release.UpdateCommitMsg)
+	assert.Equal(t, "update-msg", context.Release.ChartCommitMsg)
 	assert.Equal(t, "pr-title", context.Release.PRTitle)
 	assert.Equal(t, "pr-body", context.Release.PRBody)
 }
@@ -266,9 +266,9 @@ func TestStage_RunTagIgnoreMatch(t *testing.T) {
 			Base: "base-branch",
 		},
 		Release: ctx.Release{
-			UpdateCommitMsg: "update-msg",
-			PRTitle:         "pr-title",
-			PRBody:          "pr-body",
+			ChartCommitMsg: "update-msg",
+			PRTitle:        "pr-title",
+			PRBody:         "pr-body",
 			Ignores: []*regexp.Regexp{
 				regexp.MustCompile(`dev(.)*`),
 			},
@@ -280,7 +280,7 @@ func TestStage_RunTagIgnoreMatch(t *testing.T) {
 
 	assert.Equal(t, "ref-branch", context.Git.Ref)
 	assert.Equal(t, "base-branch", context.Git.Base)
-	assert.Equal(t, "update-msg", context.Release.UpdateCommitMsg)
+	assert.Equal(t, "update-msg", context.Release.ChartCommitMsg)
 	assert.Equal(t, "pr-title", context.Release.PRTitle)
 	assert.Equal(t, "pr-body", context.Release.PRBody)
 }
@@ -295,9 +295,9 @@ func TestStage_RunTagIgnoreMatchDryRun(t *testing.T) {
 			Base: "base-branch",
 		},
 		Release: ctx.Release{
-			UpdateCommitMsg: "update-msg",
-			PRTitle:         "pr-title",
-			PRBody:          "pr-body",
+			ChartCommitMsg: "update-msg",
+			PRTitle:        "pr-title",
+			PRBody:         "pr-body",
 			Ignores: []*regexp.Regexp{
 				regexp.MustCompile(`dev(.)*`),
 			},
@@ -316,7 +316,7 @@ func TestStage_RunTagIgnoreMatchDryRun(t *testing.T) {
 
 	assert.Equal(t, "ref-branch", context.Git.Ref)
 	assert.Equal(t, "base-branch", context.Git.Base)
-	assert.Equal(t, "update-msg", context.Release.UpdateCommitMsg)
+	assert.Equal(t, "update-msg", context.Release.ChartCommitMsg)
 	assert.Equal(t, "pr-title", context.Release.PRTitle)
 	assert.Equal(t, "pr-body", context.Release.PRBody)
 }
