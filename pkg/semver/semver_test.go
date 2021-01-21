@@ -31,6 +31,17 @@ func TestLoad(t *testing.T) {
 			},
 		},
 		{
+			v: "v0.0.0",
+			expected: Semver{
+				Major:      0,
+				Minor:      0,
+				Patch:      0,
+				Prerelease: "",
+				Build:      "",
+				hasPrefix:  true,
+			},
+		},
+		{
 			v: "0.0.1",
 			expected: Semver{
 				Major:      0,
@@ -38,6 +49,17 @@ func TestLoad(t *testing.T) {
 				Patch:      1,
 				Prerelease: "",
 				Build:      "",
+			},
+		},
+		{
+			v: "v0.0.1",
+			expected: Semver{
+				Major:      0,
+				Minor:      0,
+				Patch:      1,
+				Prerelease: "",
+				Build:      "",
+				hasPrefix:  true,
 			},
 		},
 		{
@@ -51,6 +73,17 @@ func TestLoad(t *testing.T) {
 			},
 		},
 		{
+			v: "v1.2.3",
+			expected: Semver{
+				Major:      1,
+				Minor:      2,
+				Patch:      3,
+				Prerelease: "",
+				Build:      "",
+				hasPrefix:  true,
+			},
+		},
+		{
 			v: "4.2.0-alpha",
 			expected: Semver{
 				Major:      4,
@@ -58,6 +91,17 @@ func TestLoad(t *testing.T) {
 				Patch:      0,
 				Prerelease: "alpha",
 				Build:      "",
+			},
+		},
+		{
+			v: "v4.2.0-alpha",
+			expected: Semver{
+				Major:      4,
+				Minor:      2,
+				Patch:      0,
+				Prerelease: "alpha",
+				Build:      "",
+				hasPrefix:  true,
 			},
 		},
 		{
@@ -71,6 +115,17 @@ func TestLoad(t *testing.T) {
 			},
 		},
 		{
+			v: "v2.2.2-rc.9",
+			expected: Semver{
+				Major:      2,
+				Minor:      2,
+				Patch:      2,
+				Prerelease: "rc.9",
+				Build:      "",
+				hasPrefix:  true,
+			},
+		},
+		{
 			v: "0.0.1+build2",
 			expected: Semver{
 				Major:      0,
@@ -78,6 +133,17 @@ func TestLoad(t *testing.T) {
 				Patch:      1,
 				Prerelease: "",
 				Build:      "build2",
+			},
+		},
+		{
+			v: "v0.0.1+build2",
+			expected: Semver{
+				Major:      0,
+				Minor:      0,
+				Patch:      1,
+				Prerelease: "",
+				Build:      "build2",
+				hasPrefix:  true,
 			},
 		},
 		{
@@ -91,6 +157,17 @@ func TestLoad(t *testing.T) {
 			},
 		},
 		{
+			v: "v0.2.0+build.3",
+			expected: Semver{
+				Major:      0,
+				Minor:      2,
+				Patch:      0,
+				Prerelease: "",
+				Build:      "build.3",
+				hasPrefix:  true,
+			},
+		},
+		{
 			v: "15.10.200-beta.9+build10.1",
 			expected: Semver{
 				Major:      15,
@@ -98,6 +175,17 @@ func TestLoad(t *testing.T) {
 				Patch:      200,
 				Prerelease: "beta.9",
 				Build:      "build10.1",
+			},
+		},
+		{
+			v: "v15.10.200-beta.9+build10.1",
+			expected: Semver{
+				Major:      15,
+				Minor:      10,
+				Patch:      200,
+				Prerelease: "beta.9",
+				Build:      "build10.1",
+				hasPrefix:  true,
 			},
 		},
 	}
@@ -130,6 +218,19 @@ func TestSemver_String(t *testing.T) {
 	}
 
 	assert.Equal(t, "1.2.3-alpha.1+build2", s.String())
+}
+
+func TestSemver_StringWithVersionPrefix(t *testing.T) {
+	s := Semver{
+		Major:      1,
+		Minor:      2,
+		Patch:      3,
+		Prerelease: "alpha.1",
+		Build:      "build2",
+		hasPrefix:  true,
+	}
+
+	assert.Equal(t, "v1.2.3-alpha.1+build2", s.String())
 }
 
 func TestSemver_EqualsEmpty(t *testing.T) {
