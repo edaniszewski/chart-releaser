@@ -36,6 +36,7 @@ type Semver struct {
 	Prerelease string
 	Build      string
 
+	hasPrefix  bool
 	prerelease []semver.PRVersion
 	build      []semver.PRVersion
 	versionCtx *Semver
@@ -44,6 +45,12 @@ type Semver struct {
 
 // Load a new Semver from a semantic version string.
 func Load(version string) (Semver, error) {
+	var hasPrefix bool
+	if strings.HasPrefix(version, "v") {
+		version = version[1:]
+		hasPrefix = true
+	}
+
 	v, err := semver.Parse(version)
 	if err != nil {
 		return Semver{}, err
@@ -74,6 +81,7 @@ func Load(version string) (Semver, error) {
 		Build:      strings.Join(v.Build, "."),
 		prerelease: v.Pre,
 		build:      build,
+		hasPrefix:  hasPrefix,
 		v:          v,
 	}, nil
 }
@@ -88,6 +96,9 @@ func (s *Semver) String() string {
 	if s.Build != "" {
 		str += "+"
 		str += s.Build
+	}
+	if s.hasPrefix {
+		str = "v" + str
 	}
 	return str
 }
