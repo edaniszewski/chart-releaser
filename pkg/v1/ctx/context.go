@@ -139,6 +139,7 @@ type Context struct {
 }
 
 // Dump the Context to console.
+//nolint:gosimple
 func (ctx *Context) Dump() {
 	if ctx.Out == nil {
 		log.Error("unable to dump context: context output writer is nil")
