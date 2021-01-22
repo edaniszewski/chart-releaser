@@ -198,6 +198,11 @@ func TestLoad(t *testing.T) {
 	}
 }
 
+func TestLoad_PartialString(t *testing.T) {
+	_, err := Load("0.1")
+	assert.EqualError(t, err, "No Major.Minor.Patch elements found")
+}
+
 func TestLoad_ParseError(t *testing.T) {
 	_, err := Load("invalid version string")
 	assert.EqualError(t, err, "No Major.Minor.Patch elements found")
