@@ -11,7 +11,7 @@ import (
 	"github.com/edaniszewski/chart-releaser/pkg/v1/ctx"
 	"github.com/edaniszewski/chart-releaser/pkg/v1/stages/env"
 	"github.com/edaniszewski/chart-releaser/pkg/v1/utils"
-	"gopkg.in/yaml.v2"
+	"gopkg.in/yaml.v3"
 )
 
 // ConfigVersion gets the version of the v1 configuration scheme.

@@ -7,7 +7,7 @@ import (
 
 	"github.com/edaniszewski/chart-releaser/pkg/errs"
 	"github.com/edaniszewski/chart-releaser/pkg/strategies"
-	"gopkg.in/yaml.v2"
+	"gopkg.in/yaml.v3"
 )
 
 // ConfigVersion defines the version for the v1 configuration scheme.
