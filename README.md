@@ -90,9 +90,9 @@ Top-level keys for a `chart-releaser` configuration.
 
 | Key | Description | Default |
 | --- | ----------- | ------- |
-| `name` | The name of the Chart. | `-` |
+| `name` | The name of the Chart. This is used as metadata for the tool, including template contexts. | `-` |
 | `repo` | The name of the repository holding the Chart for the project. This is required. It should follow the format `{{ RepoType }}/{{ Owner }}/{{ Name }}`. The currently supported repo types are: `github.com`. | `-` |
-| `path` | The sub-path to the chart in the repository. If this is empty, it assumes the Chart.yaml is in the root of the specified repository. | `""` |
+| `path` | The sub-path to the Chart.yaml file in the repository. If this is empty, it assumes the Chart.yaml is in the root of the specified repository. If this is does not contain `/Chart.yaml` at the end of the path, it is added automatically. | `""` |
 
 #### Publish
 
