@@ -3,7 +3,7 @@
 #
 
 BIN_NAME    := chart-releaser
-BIN_VERSION := v0.1.3
+BIN_VERSION := v0.1.4
 IMG_NAME    := chartreleaser/chart-releaser
 
 GIT_COMMIT  ?= $(shell git rev-parse --short HEAD 2> /dev/null || true)
