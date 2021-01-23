@@ -35,5 +35,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GH_PAT }}
         with:
-          version: latest
+          version: v0.149.0
           args: release --debug --rm-dist
