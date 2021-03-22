@@ -10,9 +10,9 @@ import (
 	version "github.com/edaniszewski/chart-releaser/pkg/semver"
 	"github.com/edaniszewski/chart-releaser/pkg/strategies"
 	context "github.com/edaniszewski/chart-releaser/pkg/v1/ctx"
-	"github.com/ghodss/yaml"
 	"github.com/pkg/errors"
-	"k8s.io/helm/pkg/chartutil"
+	"helm.sh/helm/v3/pkg/chart"
+	"sigs.k8s.io/yaml"
 )
 
 // Errors for the chart stage.
@@ -58,7 +58,8 @@ func (Stage) Run(ctx *context.Context) error {
 		return err
 	}
 
-	chartMeta, err := chartutil.UnmarshalChartfile([]byte(raw))
+	chartMeta := new(chart.Metadata)
+	err = yaml.Unmarshal([]byte(raw), chartMeta)
 	if err != nil {
 		return err
 	}

@@ -4,15 +4,16 @@
 
 version: v1
 chart:
+  name: helmv2-chart
   repo: github.com/edaniszewski/charts-test
-  name: chart
+  path: helm2
 publish:
   pr:
     branch_template: testing/{{ .Chart.Name }}/{{ .Chart.NewVersion }}
 release:
   strategy: minor
 extras:
-- path: something.txt
+- path: helm2/info.txt
   updates:
-  - search: bar
-    replace: foo
+  - search: text
+    replace: stuff
