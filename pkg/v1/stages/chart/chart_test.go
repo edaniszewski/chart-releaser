@@ -371,3 +371,110 @@ func TestMarshalContentsError(t *testing.T) {
 	_, err := marshalContents(math.NaN())
 	assert.EqualError(t, err, "json: unsupported value: NaN")
 }
+
+func TestHelm2Chart(t *testing.T) {
+	context := ctx.Context{
+		Chart: ctx.Chart{
+			Name:    "test-chart",
+			SubPath: "charts",
+		},
+		App: ctx.App{
+			NewVersion: testutils.NewSemver(t, "v0.3.0"),
+		},
+		UpdateStrategy: strategies.UpdateDefault,
+		Client: &testutils.FakeClient{
+			FileData: `
+apiVersion: v1
+appVersion: "v0.0.2"
+description: A Helm chart for Kubernetes
+name: helm2
+sources:
+- https://github.com/edaniszewski/charts-test.git
+version: 0.3.0
+`,
+		},
+	}
+
+	err := Stage{}.Run(&context)
+	assert.NoError(t, err)
+
+	// Context relating to Chart data
+	assert.Equal(t, "test-chart", context.Chart.Name)
+	assert.Equal(t, "charts", context.Chart.SubPath)
+	assert.Equal(t, "0.3.1", context.Chart.NewVersion.String())
+	assert.Equal(t, "0.3.0", context.Chart.PreviousVersion.String())
+	assert.Equal(t, "charts/Chart.yaml", context.Chart.File.Path)
+	assert.Equal(t, "apiVersion: v1\nappVersion: v0.3.0\ndescription: A Helm chart for Kubernetes\nname: helm2\nsources:\n- https://github.com/edaniszewski/charts-test.git\nversion: 0.3.1\n", string(context.Chart.File.NewContents))
+	assert.Equal(t, "apiVersion: v1\nappVersion: v0.0.2\ndescription: A Helm chart for Kubernetes\nname: helm2\nsources:\n- https://github.com/edaniszewski/charts-test.git\nversion: 0.3.0\n", string(context.Chart.File.PreviousContents))
+
+	assert.Equal(t, "v0.3.0", context.App.NewVersion.String())
+	assert.Equal(t, "v0.0.2", context.App.PreviousVersion.String())
+
+	// Other context info. We don't expect this to change.
+	assert.Equal(t, "", context.Author.Name)
+	assert.Equal(t, "", context.Author.Email)
+	assert.Equal(t, "", context.Git.Base)
+	assert.Equal(t, "", context.Git.Ref)
+	assert.Equal(t, "", context.Git.Tag)
+	assert.Equal(t, "", context.Release.ChartCommitMsg)
+	assert.Equal(t, "", context.Release.PRBody)
+	assert.Equal(t, "", context.Release.PRTitle)
+	assert.Equal(t, "", context.Repository.Name)
+	assert.Equal(t, "", context.Repository.Owner)
+	assert.Equal(t, ctx.RepoType(""), context.Repository.Type)
+	assert.Len(t, context.Files, 0)
+}
+
+func TestHelm3Chart(t *testing.T) {
+	context := ctx.Context{
+		Chart: ctx.Chart{
+			Name:    "test-chart",
+			SubPath: "charts",
+		},
+		App: ctx.App{
+			NewVersion: testutils.NewSemver(t, "0.3.0"),
+		},
+		UpdateStrategy: strategies.UpdateDefault,
+		Client: &testutils.FakeClient{
+			FileData: `
+apiVersion: v2
+name: helm3
+description: A Helm chart for Kubernetes
+type: application
+version: 0.1.0
+appVersion: "0.1.0"
+sources:
+- https://github.com/edaniszewski/charts-test.git
+`,
+		},
+	}
+
+	err := Stage{}.Run(&context)
+	assert.NoError(t, err)
+
+	// Context relating to Chart data
+	assert.Equal(t, "test-chart", context.Chart.Name)
+	assert.Equal(t, "charts", context.Chart.SubPath)
+	assert.Equal(t, "0.1.1", context.Chart.NewVersion.String())
+	assert.Equal(t, "0.1.0", context.Chart.PreviousVersion.String())
+	assert.Equal(t, "charts/Chart.yaml", context.Chart.File.Path)
+	assert.Equal(t, "apiVersion: v2\nappVersion: 0.3.0\ndescription: A Helm chart for Kubernetes\nname: helm3\nsources:\n- https://github.com/edaniszewski/charts-test.git\ntype: application\nversion: 0.1.1\n", string(context.Chart.File.NewContents))
+	assert.Equal(t, "apiVersion: v2\nappVersion: 0.1.0\ndescription: A Helm chart for Kubernetes\nname: helm3\nsources:\n- https://github.com/edaniszewski/charts-test.git\ntype: application\nversion: 0.1.0\n", string(context.Chart.File.PreviousContents))
+
+	assert.Equal(t, "0.3.0", context.App.NewVersion.String())
+	assert.Equal(t, "0.1.0", context.App.PreviousVersion.String())
+
+	// Other context info. We don't expect this to change.
+	assert.Equal(t, "", context.Author.Name)
+	assert.Equal(t, "", context.Author.Email)
+	assert.Equal(t, "", context.Git.Base)
+	assert.Equal(t, "", context.Git.Ref)
+	assert.Equal(t, "", context.Git.Tag)
+	assert.Equal(t, "", context.Release.ChartCommitMsg)
+	assert.Equal(t, "", context.Release.PRBody)
+	assert.Equal(t, "", context.Release.PRTitle)
+	assert.Equal(t, "", context.Repository.Name)
+	assert.Equal(t, "", context.Repository.Owner)
+	assert.Equal(t, ctx.RepoType(""), context.Repository.Type)
+	assert.Len(t, context.Files, 0)
+}

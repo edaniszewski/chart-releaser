@@ -89,7 +89,7 @@ func TestContext_PrintErrors_NoErrors(t *testing.T) {
 	}
 
 	ctx.PrintErrors()
-	assert.Equal(t, "\x1b[32mdry-run completed without errors\n\x1b[0m", buf.String())
+	assert.Equal(t, "\x1b[0;32mdry-run completed without errors\n\x1b[0m", buf.String())
 }
 
 func TestContext_PrintErrors_HasErrors(t *testing.T) {
@@ -101,7 +101,7 @@ func TestContext_PrintErrors_HasErrors(t *testing.T) {
 	ctx.errors.Add(errors.New("test error"))
 
 	ctx.PrintErrors()
-	assert.Equal(t, "\x1b[31m\ndry-run completed with errors\x1b[0m\nErrors:\n • test error\n\n", buf.String())
+	assert.Equal(t, "\x1b[0;31m\ndry-run completed with errors\x1b[0m\nErrors:\n • test error\n\n", buf.String())
 }
 
 func TestContext_CheckDryRun(t *testing.T) {
