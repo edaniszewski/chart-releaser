@@ -22,7 +22,7 @@ chart:
 
 func TestLoadFromBytes_Error(t *testing.T) {
 	_, err := LoadFromBytes([]byte{0x00, 0x01})
-	assert.EqualError(t, err, "yaml: control characters are not allowed")
+	assert.EqualError(t, err, "error converting YAML to JSON: yaml: control characters are not allowed")
 }
 
 func TestConfig_GetVersion(t *testing.T) {

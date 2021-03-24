@@ -87,7 +87,7 @@ func TestLoad_FileNotFound(t *testing.T) {
 
 func TestLoad_InvalidYAML(t *testing.T) {
 	_, err := Load("testdata/invalid.yaml")
-	assert.EqualError(t, err, "yaml: line 1: did not find expected node content")
+	assert.EqualError(t, err, "error converting YAML to JSON: yaml: line 1: did not find expected node content")
 	assert.Error(t, err)
 }
 

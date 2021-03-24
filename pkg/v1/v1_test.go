@@ -25,7 +25,7 @@ func TestUpdater_Run_LoadError(t *testing.T) {
 	u := NewUpdater([]byte{0x00, 0x01})
 
 	err := u.Run(UpdateOptions{})
-	assert.EqualError(t, err, "yaml: control characters are not allowed")
+	assert.EqualError(t, err, "error converting YAML to JSON: yaml: control characters are not allowed")
 }
 
 func TestUpdateOptions_AugmentCtx(t *testing.T) {
@@ -61,7 +61,7 @@ func TestFormatter_Run_LoadError(t *testing.T) {
 	f := NewFormatter([]byte{0x00, 0x01})
 
 	err := f.Run(FormatterOptions{})
-	assert.EqualError(t, err, "yaml: control characters are not allowed")
+	assert.EqualError(t, err, "error converting YAML to JSON: yaml: control characters are not allowed")
 }
 
 func TestNewChecker(t *testing.T) {
@@ -78,5 +78,5 @@ func TestChecker_Run_LoadError(t *testing.T) {
 	c := NewChecker([]byte{0x00, 0x01})
 
 	err := c.Run(CheckerOptions{})
-	assert.EqualError(t, err, "yaml: control characters are not allowed")
+	assert.EqualError(t, err, "error converting YAML to JSON: yaml: control characters are not allowed")
 }

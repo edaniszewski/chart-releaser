@@ -48,5 +48,5 @@ func TestStage_Run(t *testing.T) {
 
 	err := Stage{}.Run(&context)
 	assert.NoError(t, err)
-	assert.Equal(t, "\x1b[37m+----start diff\n\x1b[0m\x1b[34m===\x1b[0m\nShowing changes to \x1b[33mChart.yaml\x1b[0m\n\n\x1b[31m- version: 1\x1b[0m\n\x1b[32m+ version: 2\x1b[0m\n\x1b[34m===\x1b[0m\nShowing changes to \x1b[33mtestfile.txt\x1b[0m\n\n\x1b[31m- abc\x1b[0m\n\x1b[32m+ 123\x1b[0m\n\x1b[37m+----end diff\n\x1b[0m", buf.String())
+	assert.Equal(t, "\x1b[0;37m+----start diff\n\x1b[0m\x1b[0;34m===\x1b[0m\nShowing changes to \x1b[0;33mChart.yaml\x1b[0m\n\n\x1b[0;31m- version: 1\x1b[0m\n\x1b[0;32m+ version: 2\x1b[0m\n\x1b[0;34m===\x1b[0m\nShowing changes to \x1b[0;33mtestfile.txt\x1b[0m\n\n\x1b[0;31m- abc\x1b[0m\n\x1b[0;32m+ 123\x1b[0m\n\x1b[0;37m+----end diff\n\x1b[0m", buf.String())
 }
