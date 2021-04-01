@@ -95,6 +95,16 @@ func (Stage) Run(ctx *context.Context) error {
 		}
 
 		extraFile.NewContents = []byte(contents)
+
+		if !extraFile.HasChanges() {
+			log.WithFields(log.Fields{
+				"contents":  string(extraFile.NewContents),
+				"path":      extra.Path,
+				"repoName":  ctx.Repository.Name,
+				"repoOwner": ctx.Repository.Owner,
+			}).Warn("no change detected to extras file")
+		}
+
 		ctx.Files = append(ctx.Files, extraFile)
 	}
 	return nil
