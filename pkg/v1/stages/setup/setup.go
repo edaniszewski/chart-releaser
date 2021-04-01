@@ -43,11 +43,12 @@ func (Stage) Run(ctx *ctx.Context) error {
 	}
 
 	log.Debug("checking if git is in a clean state")
-	if utils.IsDirty() {
+	if isDirty, out := utils.IsDirty(); isDirty {
 		if ctx.AllowDirty {
 			log.Info("allowing git to be in a dirty state")
 		} else {
 			if err := ctx.CheckDryRun(ErrDirtyGit); err != nil {
+				log.Errorf("dirty git state detected\n" + out)
 				return err
 			}
 		}

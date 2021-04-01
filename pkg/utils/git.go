@@ -3,12 +3,12 @@ package utils
 import "strings"
 
 // IsDirty checks whether a repository is in a dirty state (has uncommitted changes).
-func IsDirty() bool {
+func IsDirty() (bool, string) {
 	out, err := RunCommand("git", "status", "--porcelain")
 	if strings.TrimSpace(out) != "" || err != nil {
-		return true
+		return true, out
 	}
-	return false
+	return false, ""
 }
 
 // GetTag gets the latest git tag for a repository.
